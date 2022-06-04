@@ -1,4 +1,4 @@
-﻿using Sandbox.ModAPI.Ingame;
+using Sandbox.ModAPI.Ingame;
 
 namespace IngameScript
 {
@@ -7,6 +7,7 @@ namespace IngameScript
         public class Debug
         {
             Program prgm;
+            // Le string que se sert pour afficher les info de debug
             public string tempConstructionDebug;
 
 
@@ -24,7 +25,6 @@ namespace IngameScript
                 if (_managerBlocks.listAllBatterys.Count != 0)
                 {
                     tempConstructionDebug += "Nbs de batteries: " + _managerBlocks.listAllBatterys.Count;
-
 
                     int recharge = 0;
                     int auto = 0;
@@ -93,7 +93,6 @@ namespace IngameScript
                     tempConstructionDebug += "\nStockpile On: " + on;
                     tempConstructionDebug += "\nStockpile Off: " + off;
                 }
-
 
                 if (_managerBlocks.listAllTrusters.Count != 0)
                 {

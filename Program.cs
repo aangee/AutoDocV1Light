@@ -1,4 +1,4 @@
-﻿using Sandbox.ModAPI.Ingame;
+using Sandbox.ModAPI.Ingame;
 
 namespace IngameScript
 {
@@ -23,7 +23,7 @@ namespace IngameScript
         float timerDeconnection = 0;
         bool isDecoConnector = false;
 
-        //On stock le name de la grid du programBloc
+        //On stock le name de la grid du programBloc(son uniqueID)
         string nameGridShip;
 
         //Pour active le debug 
