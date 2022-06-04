@@ -45,8 +45,9 @@ namespace IngameScript
                         }
                     }
 
-                    tempConstructionDebug += "\nRecharge On: " + recharge + " / Auto On: " + auto;
-                    tempConstructionDebug += "\nDecharge On: " + decharge;
+                    tempConstructionDebug += "\nRecharge: " + recharge;
+                    tempConstructionDebug += "\nDecharge: " + decharge;
+                    tempConstructionDebug += "\nAuto: " + auto;
                 }
                 //tempConstructionDebug += "\n~~ DEBUG BLOCs Trusters ~~";
 
@@ -64,8 +65,6 @@ namespace IngameScript
                             tempConstructionDebug += "\nEtat: " + connectorBlock.Status;
 
                         }
-
-
                     }
 
                     if (_managerBlocks.connectorShip == null)
@@ -91,7 +90,8 @@ namespace IngameScript
                             off++;
                         }
                     }
-                    tempConstructionDebug += "\nStockpile On: " + on + " / Off: " + off;
+                    tempConstructionDebug += "\nStockpile On: " + on;
+                    tempConstructionDebug += "\nStockpile Off: " + off;
                 }
 
 
@@ -111,7 +111,8 @@ namespace IngameScript
                             off++;
                         }
                     }
-                    tempConstructionDebug += "\nTruster On: " + on + " / Off: " + off;
+                    tempConstructionDebug += "\nTruster On: " + on;
+                    tempConstructionDebug += "\nTruster Off: " + off;
 
                 }
 

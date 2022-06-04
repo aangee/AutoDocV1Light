@@ -35,7 +35,7 @@ namespace IngameScript
                 this.prgm = _prgm;
                 GetAllBlocks();//On recup tous les bloc
                 TriDesBlocks();//On tri les bloc util
-                TrouveCockpit();//On cherche un copite
+                TrouveCockpit();//On cherche un cockpit
                 TrouveConnector();//On cherche le connector
             }
 

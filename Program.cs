@@ -93,7 +93,7 @@ namespace IngameScript
             if (isActiveDebugInProgramBloc)
             {
                 _DEBUG_OfPrgmBlock = new Debug(this);
-                Echo("Name grid: " + Me.CubeGrid.Name);
+                //Echo("Name grid: " + Me.CubeGrid.Name);
                 _DEBUG_OfPrgmBlock.ShowDebug(managBlock);
 
             }
