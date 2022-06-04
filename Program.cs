@@ -54,6 +54,7 @@ namespace IngameScript
 
         public void Main(string argument, UpdateType updateSource)
         {
+            //Test 22222222
             if (managBlock.connectorShip != null)
             {
                 Update_P(argument);
