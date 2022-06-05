@@ -69,7 +69,9 @@ namespace IngameScript
                     int on = 0;
                     int off = 0;
                     foreach (IMyGasTank tankBlock in _managerBlocks.listAllTanks)
-                        (tankBlock.Stockpile) ? on++ : off++;
+                        if (tankBlock.Stockpile) on++;
+                        else off++;
+                        //(tankBlock.Stockpile) ? on++ : off++;
 
                     tempConstructionDebug += "\nStockpile On: " + on;
                     tempConstructionDebug += "\nStockpile Off: " + off;
@@ -81,7 +83,8 @@ namespace IngameScript
                     int on = 0;
                     int off = 0;
                     foreach (IMyThrust trusterBlock in _managerBlocks.listAllTrusters)
-                        (trusterBlock.Enabled) ? on++ : off++;
+                        if (trusterBlock.Enabled) on++;
+                        else off++;
 
                     tempConstructionDebug += "\nTruster On: " + on;
                     tempConstructionDebug += "\nTruster Off: " + off;
