@@ -126,7 +126,7 @@ namespace IngameScript
                     // FIXME: pas sur: On doit recup toute la definition du bloc
                     // juste pour etre sur que le jeu nous donne se que l'on veux, 
                     VRage.ObjectBuilders.SerializableDefinitionId defId = connector.BlockDefinition;
-                    // Verification que sais bien un connecteur et pas autre chose
+                    // Verification que sais bien un connecteur et pas autre chose style les ( ejecter )
                     if (defId.SubtypeId.Contains("ConnectorMedium"))
                     {
                         connectorShip = connector;
