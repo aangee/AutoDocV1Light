@@ -34,9 +34,9 @@ namespace IngameScript
             {
                 this.prgm = _prgm;
                 GetAllBlocks();//On recup tous les bloc
-                TriDesBlocks();//On tri les bloc util
-                TrouveCockpit();//On cherche un cockpit
-                TrouveConnector();//On cherche le connector
+                BlockSorting();//On tri les bloc util
+                FindCockpit();//On cherche un cockpit
+                FindConnector();//On cherche le connector
             }
 
 
@@ -61,7 +61,7 @@ namespace IngameScript
             /// et on check si les blocs de nos liste tempon on cette uniqueID
             /// ensuie on les ajoute a nos liste perso ( les bloc utils et qui sur la meme grid ) 
             /// </summary>
-            void TriDesBlocks()
+            void BlockSorting()
             {
 
                 plistAllCockpit.ForEach(x =>
@@ -107,7 +107,7 @@ namespace IngameScript
             /// On recherche le cockpit.
             /// @info Pour le moment on prent le premier dans la liste
             /// </summary>
-            void TrouveCockpit()
+            void FindCockpit()
             {
                 if (listAllCockpit.Count == 0) return;
                 //TODO: recherche du cockpit, avoir si on recuperai pas plus par un tag (pour eviter les sousi de plusieur cockpit sur le ship)
@@ -117,7 +117,7 @@ namespace IngameScript
             /// On cherche le connecteur.
             /// Ici on cherche juste un connector petit bloc
             /// </summary>
-            void TrouveConnector()
+            void FindConnector()
             {
                 if (listAllConnectors.Count == 0) return;
 

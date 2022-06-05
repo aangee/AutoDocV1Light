@@ -1,4 +1,4 @@
-﻿using Sandbox.ModAPI.Ingame;
+using Sandbox.ModAPI.Ingame;
 
 namespace IngameScript
 {
@@ -7,14 +7,13 @@ namespace IngameScript
         public class Debug
         {
             Program prgm;
+            // Le string que se sert pour afficher les info de debug
             public string tempConstructionDebug;
 
 
             public Debug(Program _prgm)
             {
                 this.prgm = _prgm;
-
-                //ShowDebug(_prgm.managBlock);
             }
 
             public void ShowDebug(ManagerBlocks _managerBlocks)
@@ -25,24 +24,17 @@ namespace IngameScript
                 {
                     tempConstructionDebug += "Nbs de batteries: " + _managerBlocks.listAllBatterys.Count;
 
-
                     int recharge = 0;
                     int auto = 0;
                     int decharge = 0;
                     foreach (IMyBatteryBlock batteryBlock in _managerBlocks.listAllBatterys)
                     {
                         if (batteryBlock.ChargeMode == ChargeMode.Recharge)
-                        {
                             recharge++;
-                        }
                         else if (batteryBlock.ChargeMode == ChargeMode.Auto)
-                        {
                             auto++;
-                        }
                         else
-                        {
                             decharge++;
-                        }
                     }
 
                     tempConstructionDebug += "\nRecharge: " + recharge;
@@ -67,10 +59,7 @@ namespace IngameScript
                         }
                     }
 
-                    if (_managerBlocks.connectorShip == null)
-                    {
-                        tempConstructionDebug += "\nPas de connecteur valide";
-                    }
+                    if (_managerBlocks.connectorShip == null) tempConstructionDebug += "\nPas de connecteur valide";
                 }
                 //tempConstructionDebug += "\n~~ DEBUG BLOCs Tank ~~";
                 if (_managerBlocks.listAllTanks.Count != 0)
@@ -80,20 +69,11 @@ namespace IngameScript
                     int on = 0;
                     int off = 0;
                     foreach (IMyGasTank tankBlock in _managerBlocks.listAllTanks)
-                    {
-                        if (tankBlock.Stockpile)
-                        {
-                            on++;
-                        }
-                        else
-                        {
-                            off++;
-                        }
-                    }
+                        (tankBlock.Stockpile) ? on++ : off++;
+
                     tempConstructionDebug += "\nStockpile On: " + on;
                     tempConstructionDebug += "\nStockpile Off: " + off;
                 }
-
 
                 if (_managerBlocks.listAllTrusters.Count != 0)
                 {
@@ -101,21 +81,12 @@ namespace IngameScript
                     int on = 0;
                     int off = 0;
                     foreach (IMyThrust trusterBlock in _managerBlocks.listAllTrusters)
-                    {
-                        if (trusterBlock.Enabled)
-                        {
-                            on++;
-                        }
-                        else
-                        {
-                            off++;
-                        }
-                    }
+                        (trusterBlock.Enabled) ? on++ : off++;
+
                     tempConstructionDebug += "\nTruster On: " + on;
                     tempConstructionDebug += "\nTruster Off: " + off;
 
                 }
-
                 tempConstructionDebug += "\n~~ by AANGEE & WALTO ~~";
                 //Debug
                 prgm.Echo(tempConstructionDebug);
