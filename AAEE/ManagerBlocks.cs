@@ -10,7 +10,6 @@ namespace IngameScript
         {
             Program prgm;
 
-
             // Liste tempon qui recup tous les blocs du ship et tous se qui se trouve connecter a la grid ou se trouve le programBloc
             List<IMyCockpit> plistAllCockpit = new List<IMyCockpit>();
             List<IMyBatteryBlock> plistAllBatterys = new List<IMyBatteryBlock>();
@@ -29,7 +28,6 @@ namespace IngameScript
             public IMyShipConnector connectorShip;
             public IMyCockpit cockpitShip;
 
-
             public ManagerBlocks(Program _prgm)
             {
                 this.prgm = _prgm;
@@ -38,8 +36,6 @@ namespace IngameScript
                 FindCockpit();//On cherche un cockpit
                 FindConnector();//On cherche le connector
             }
-
-
 
             #region Private
             /// <summary>
@@ -63,18 +59,16 @@ namespace IngameScript
             /// </summary>
             void BlockSorting()
             {
-
                 plistAllCockpit.ForEach(x =>
                 {
-                    if (x.CubeGrid.Name.Contains(prgm.nameGridShip))
+                    if (x.CubeGrid.Name.Contains(prgm.uidGridShip))
                     {
                         listAllCockpit.Add(x);
-                        prgm.Echo("Cockpit: " + x.CustomData);
                     }
                 });
                 plistAllBatterys.ForEach(x =>
                 {
-                    if (x.CubeGrid.Name.Contains(prgm.nameGridShip))
+                    if (x.CubeGrid.Name.Contains(prgm.uidGridShip))
                     {
                         listAllBatterys.Add(x);
                     }
@@ -82,21 +76,21 @@ namespace IngameScript
 
                 plistAllTrusters.ForEach(x =>
                 {
-                    if (x.CubeGrid.Name.Contains(prgm.nameGridShip))
+                    if (x.CubeGrid.Name.Contains(prgm.uidGridShip))
                     {
                         listAllTrusters.Add(x);
                     }
                 });
                 plistAllConnectors.ForEach(x =>
                 {
-                    if (x.CubeGrid.Name.Contains(prgm.nameGridShip))
+                    if (x.CubeGrid.Name.Contains(prgm.uidGridShip))
                     {
                         listAllConnectors.Add(x);
                     }
                 });
                 plistAllTanks.ForEach(x =>
                 {
-                    if (x.CubeGrid.Name.Contains(prgm.nameGridShip))
+                    if (x.CubeGrid.Name.Contains(prgm.uidGridShip))
                     {
                         listAllTanks.Add(x);
                     }
@@ -109,9 +103,16 @@ namespace IngameScript
             /// </summary>
             void FindCockpit()
             {
-                if (listAllCockpit.Count == 0) return;
-                //TODO: recherche du cockpit, avoir si on recuperai pas plus par un tag (pour eviter les sousi de plusieur cockpit sur le ship)
+                if (listAllCockpit.Count == 0)
+                {
+                    prgm.Echo("Cockpit non valide");
+                    return;
+                }
+                //TODO: recherche du cockpit, avoir si on recuperai pas, par un tag (pour eviter les sousi de plusieur cockpit sur le ship)
                 cockpitShip = listAllCockpit.First();
+
+                prgm.Echo("Cockpit valide");
+                if(prgm.isActiveFullDebug) prgm.Echo("CustomData: " + cockpitShip.CustomData);
             }
             /// <summary>
             /// On cherche le connecteur.
@@ -130,11 +131,14 @@ namespace IngameScript
                     if (defId.SubtypeId.Contains("ConnectorMedium"))
                     {
                         connectorShip = connector;
+
+                        prgm.Echo("Connecteur valide");
+                        if (prgm.isActiveFullDebug) prgm.Echo("CustomData: " + connectorShip.CustomData);
                     }
                     else
                     {
                         if (prgm.isActiveDebugInProgramBloc)
-                            prgm.Echo(connector.DisplayNameText + " n'ai pas un connector valide");
+                            prgm.Echo(connector.DisplayNameText + " n'ai pas un connecteur valide");
                     }
                 }
             }

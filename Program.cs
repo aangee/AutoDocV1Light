@@ -4,17 +4,15 @@ namespace IngameScript
 {
     partial class Program : MyGridProgram
     {
-        /*
-       * AutoTriggerDock
-       * -----------
-       * 
-       * By Aangee & Walto
-       * 
-       */
+       /* AutoTriggerDock
+       *  -----------
+       *  By Aangee & Walto */
         #region Public
 
         public ManagerBlocks managBlock;
-        public float timerDeco = 0.1f;//0.05f pour 10sec environ -- 0.1f pour 5sec environ -- 0.2f pour 1sec environ
+        public float timerDeco = 5f;//Une valeur plus haute augment le temps avent deconnection du connecteur
+        //EDIT: Peut etre mettre une valeur plus comprehensible pour l'utilisateur? 
+        //EDIT: Pour les conditions voir pour utiliser "?:" (conditions ternaires, plus compactes et plus lisibles)
         #endregion
 
         #region Private
@@ -24,10 +22,11 @@ namespace IngameScript
         bool isDecoConnector = false;
 
         //On stock le name de la grid du programBloc
-        string nameGridShip;// ? uidGridShip
+        string uidGridShip;
 
         //Pour active le debug 
         bool isActiveDebugInProgramBloc = true;
+        bool isActiveFullDebug = false;
 
         Debug _DEBUG_OfPrgmBlock;
         #endregion
@@ -35,21 +34,17 @@ namespace IngameScript
         #region Base program
         public Program()
         {
-
             // Réglage frequence update
             Runtime.UpdateFrequency = UpdateFrequency.Update10;
 
-
-
-            //On recup le name(uniqueID) de la grid ou se trouve le se programmeBlock
-            nameGridShip = Me.CubeGrid.Name;
+            //On recup le name(uniqueID) de la grid ou se trouve le programmeBlock
+            uidGridShip = Me.CubeGrid.Name;
 
             //Avec sa ont gere tous les bloc du ship
             managBlock = new ManagerBlocks(this);
 
             //Reglage pour le debug
             InitDebug();
-
         }
 
         public void Main(string argument, UpdateType updateSource)
@@ -63,7 +58,6 @@ namespace IngameScript
 
         void Update_P(string _args)
         {
-
             if (_args == "co")
             {
                 Connection();
@@ -73,24 +67,21 @@ namespace IngameScript
                 isDecoConnector = true;// Pour le retare de deconnection du connecteur
                 Deconnection();
             }
-
-            //On lance le timer pour la deco retarder du connecteur
+            //On lance le timer pour le retard de deconnection du connecteur
             UpdateTimerDeco();
 
-
-            UpdateDB(); //Debug
-
+            // Pour mettre a jour le debug
+            if (isActiveFullDebug) _DEBUG_OfPrgmBlock.ShowDebug(managBlock); //Debug
         }
 
         #region Init & Update, debug & ui
-
         /// <summary>
         /// On cree le debug
         /// </summary>
         void InitDebug()
         {
             //On lance le setup du debug dans le control panel
-            if (isActiveDebugInProgramBloc)
+            if (isActiveFullDebug)
             {
                 _DEBUG_OfPrgmBlock = new Debug(this);
                 //Echo("Name grid: " + Me.CubeGrid.Name);
@@ -99,29 +90,14 @@ namespace IngameScript
             }
 
         }
-        /// <summary>
-        /// Pour mettre a jour le debug
-        /// </summary>
-        void UpdateDB()
-        {
-
-
-            if (isActiveDebugInProgramBloc)
-                _DEBUG_OfPrgmBlock.ShowDebug(managBlock);
-
-        }
-
-
         #endregion
 
         #region Connection & Deconnection
-
         /// On check si on peut connecter le connecteur
         /// on désactive les thrusters
         /// et on met en recharge les batteries
         void Connection()
         {
-          
                 // Si on ne peut pas se connecter on ne fait rien
                 if (managBlock.connectorShip.Status == MyShipConnectorStatus.Unconnected) { return; }
 
@@ -129,7 +105,6 @@ namespace IngameScript
                 DeactiveThrusters();
                 RestockTanks();
                 RechargeBattery();
-           
         }
 
         /// Ici on active les thrusters
@@ -137,43 +112,33 @@ namespace IngameScript
         /// et on déconnecte le connecteur
         void Deconnection()
         {
-            
             if (managBlock.connectorShip.Status != MyShipConnectorStatus.Connected) { return; }
                
             // Le connector se deco apres un petit temps
             AutoBattery();
             DestockTanks();
             ActiveThrusters();
-                
         }
 
-        /// <summary>
-        /// <list>
-        /// <item>Timer pour deconnecter, le connecteur</item>
-        /// <item>apres avoir allumer les</item>
-        /// <item>Thruster, Tank, Batts, Ect</item>
-        /// <item>DEFAULT VALUE: 1f</item>
-        /// </list>
-        /// </summary>
+        /// Timer pour deconnecter, le connecteur
+        /// apres avoir allumer les
+        /// Thruster, Tank, Batts, Ect
+        /// DEFAULT VALUE: 1f
         void UpdateTimerDeco()
         {
-
             if (!isDecoConnector) { return; }
 
-            timerDeconnection += 0.1f;
-            if (timerDeconnection >= 1f)
+            timerDeconnection += 0.5f;
+            if (timerDeconnection >= timerDeco)
             {
                 managBlock.connectorShip.Disconnect();
                 timerDeconnection = 0;
                 isDecoConnector = false;
             }
         }
-
-
         #endregion
 
         #region Truster
-
         void DeactiveThrusters()
         {
             if (managBlock.listAllTrusters.Count != 0)
@@ -187,7 +152,6 @@ namespace IngameScript
                 }
             }
         }
-
         void ActiveThrusters()
         {
             if (managBlock.listAllTrusters.Count != 0)
@@ -204,7 +168,6 @@ namespace IngameScript
         #endregion
 
         #region Tank
-
         void DestockTanks()
         {
             if (managBlock.listAllTanks.Count != 0)
@@ -215,7 +178,6 @@ namespace IngameScript
                 }
             }
         }
-
         void RestockTanks()
         {
             if (managBlock.listAllTanks.Count != 0)
@@ -229,7 +191,6 @@ namespace IngameScript
         #endregion
 
         #region Batt
-
         /// Ici on met toutes les batteries en recharge
         public void RechargeBattery()
         {

@@ -10,12 +10,14 @@ namespace IngameScript
             // Le string que se sert pour afficher les info de debug
             public string tempConstructionDebug;
 
-
             public Debug(Program _prgm)
             {
                 this.prgm = _prgm;
             }
-
+            /// <summary>
+            /// Affiche des info sur les blocks 
+            /// </summary>
+            /// <param name="_managerBlocks">Il contient tous les blocs du ship</param>
             public void ShowDebug(ManagerBlocks _managerBlocks)
             {
                 tempConstructionDebug = string.Empty;
@@ -41,8 +43,6 @@ namespace IngameScript
                     tempConstructionDebug += "\nDecharge: " + decharge;
                     tempConstructionDebug += "\nAuto: " + auto;
                 }
-                //tempConstructionDebug += "\n~~ DEBUG BLOCs Trusters ~~";
-
                 //tempConstructionDebug += "\n~~ DEBUG BLOCs Connector ~~";
                 if (_managerBlocks.listAllConnectors.Count != 0)
                 {
@@ -76,7 +76,7 @@ namespace IngameScript
                     tempConstructionDebug += "\nStockpile On: " + on;
                     tempConstructionDebug += "\nStockpile Off: " + off;
                 }
-
+                //tempConstructionDebug += "\n~~ DEBUG BLOCs Trusters ~~";
                 if (_managerBlocks.listAllTrusters.Count != 0)
                 {
                     tempConstructionDebug += "\nNbs de trusters: " + _managerBlocks.listAllTrusters.Count;
