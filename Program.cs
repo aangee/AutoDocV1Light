@@ -9,9 +9,9 @@ namespace IngameScript
        *  By Aangee & Walto */
         #region Public
 
-        public ManagerBlocks managBlock;
         public float timerDeco = 5f;//Une valeur plus haute augment le temps avent deconnection du connecteur
-        //EDIT: Peut etre mettre une valeur plus comprehensible pour l'utilisateur? 
+
+        public string tagName = "DNF";
         //EDIT: Pour les conditions voir pour utiliser "?:" (conditions ternaires, plus compactes et plus lisibles)
         #endregion
 
@@ -28,6 +28,8 @@ namespace IngameScript
         bool isActiveDebugInProgramBloc = true;
         bool isActiveFullDebug = false;
 
+        ManagerBlocks managerBlock;
+        ManagerCustomData managerCustomData;
         Debug _DEBUG_OfPrgmBlock;
         #endregion
 
@@ -41,7 +43,12 @@ namespace IngameScript
             uidGridShip = Me.CubeGrid.Name;
 
             //Avec sa ont gere tous les bloc du ship
-            managBlock = new ManagerBlocks(this);
+            managerBlock = new ManagerBlocks(this);
+
+            //Ici on gere le customData
+            managerCustomData = new ManagerCustomData(this);
+            //On lance initialisation des donnees a ajoute
+            managerCustomData.InitCustomData();
 
             //Reglage pour le debug
             InitDebug();
@@ -49,7 +56,7 @@ namespace IngameScript
 
         public void Main(string argument, UpdateType updateSource)
         {
-            if (managBlock.connectorShip != null)
+            if (managerBlock.connectorShip != null)
             {
                 Update_P(argument);
             }
@@ -71,7 +78,7 @@ namespace IngameScript
             UpdateTimerDeco();
 
             // Pour mettre a jour le debug
-            if (isActiveFullDebug) _DEBUG_OfPrgmBlock.ShowDebug(managBlock); //Debug
+            if (isActiveFullDebug) _DEBUG_OfPrgmBlock.ShowDebug(managerBlock); //Debug
         }
 
         #region Init & Update, debug & ui
@@ -85,7 +92,7 @@ namespace IngameScript
             {
                 _DEBUG_OfPrgmBlock = new Debug(this);
                 //Echo("Name grid: " + Me.CubeGrid.Name);
-                _DEBUG_OfPrgmBlock.ShowDebug(managBlock);
+                _DEBUG_OfPrgmBlock.ShowDebug(managerBlock);
 
             }
 
@@ -99,9 +106,9 @@ namespace IngameScript
         void Connection()
         {
                 // Si on ne peut pas se connecter on ne fait rien
-                if (managBlock.connectorShip.Status == MyShipConnectorStatus.Unconnected) { return; }
+                if (managerBlock.connectorShip.Status == MyShipConnectorStatus.Unconnected) { return; }
 
-                managBlock.connectorShip.Connect();
+                managerBlock.connectorShip.Connect();
                 DeactiveThrusters();
                 RestockTanks();
                 RechargeBattery();
@@ -112,7 +119,7 @@ namespace IngameScript
         /// et on déconnecte le connecteur
         void Deconnection()
         {
-            if (managBlock.connectorShip.Status != MyShipConnectorStatus.Connected) { return; }
+            if (managerBlock.connectorShip.Status != MyShipConnectorStatus.Connected) { return; }
                
             // Le connector se deco apres un petit temps
             AutoBattery();
@@ -131,7 +138,7 @@ namespace IngameScript
             timerDeconnection += 0.5f;
             if (timerDeconnection >= timerDeco)
             {
-                managBlock.connectorShip.Disconnect();
+                managerBlock.connectorShip.Disconnect();
                 timerDeconnection = 0;
                 isDecoConnector = false;
             }
@@ -141,9 +148,9 @@ namespace IngameScript
         #region Truster
         void DeactiveThrusters()
         {
-            if (managBlock.listAllTrusters.Count != 0)
+            if (managerBlock.listAllTrusters.Count != 0)
             {
-                foreach (IMyThrust thrusterBlock in managBlock.listAllTrusters)
+                foreach (IMyThrust thrusterBlock in managerBlock.listAllTrusters)
                 {
                     if (thrusterBlock.Enabled)
                     {
@@ -154,9 +161,9 @@ namespace IngameScript
         }
         void ActiveThrusters()
         {
-            if (managBlock.listAllTrusters.Count != 0)
+            if (managerBlock.listAllTrusters.Count != 0)
             {
-                foreach (IMyThrust thrusterBlock in managBlock.listAllTrusters)
+                foreach (IMyThrust thrusterBlock in managerBlock.listAllTrusters)
                 {
                     if (!thrusterBlock.Enabled)
                     {
@@ -170,9 +177,9 @@ namespace IngameScript
         #region Tank
         void DestockTanks()
         {
-            if (managBlock.listAllTanks.Count != 0)
+            if (managerBlock.listAllTanks.Count != 0)
             {
-                foreach (IMyGasTank gasBlock in managBlock.listAllTanks)
+                foreach (IMyGasTank gasBlock in managerBlock.listAllTanks)
                 {
                     gasBlock.Stockpile = false;
                 }
@@ -180,9 +187,9 @@ namespace IngameScript
         }
         void RestockTanks()
         {
-            if (managBlock.listAllTanks.Count != 0)
+            if (managerBlock.listAllTanks.Count != 0)
             {
-                foreach (IMyGasTank gasBlock in managBlock.listAllTanks)
+                foreach (IMyGasTank gasBlock in managerBlock.listAllTanks)
                 {
                     gasBlock.Stockpile = true;
                 }
@@ -194,9 +201,9 @@ namespace IngameScript
         /// Ici on met toutes les batteries en recharge
         public void RechargeBattery()
         {
-            if (managBlock.listAllBatterys.Count != 0)
+            if (managerBlock.listAllBatterys.Count != 0)
             {
-                foreach (IMyBatteryBlock batteryBlock in managBlock.listAllBatterys)
+                foreach (IMyBatteryBlock batteryBlock in managerBlock.listAllBatterys)
                 {
                     batteryBlock.ChargeMode = ChargeMode.Recharge;
                 }
@@ -205,9 +212,9 @@ namespace IngameScript
         /// Ici on met toutes les batteries en auto
         public void AutoBattery()
         {
-            if (managBlock.listAllBatterys.Count != 0)
+            if (managerBlock.listAllBatterys.Count != 0)
             {
-                foreach (IMyBatteryBlock batteryBlock in managBlock.listAllBatterys)
+                foreach (IMyBatteryBlock batteryBlock in managerBlock.listAllBatterys)
                 {
                     batteryBlock.ChargeMode = ChargeMode.Auto;
                 }
