@@ -34,9 +34,10 @@ namespace IngameScript
                 this.prgm = _prgm;
                 this.tagName = _prgm.tagName;
 
+                //Template pour options utilisateur
                 this.templateOption = this.tagName + "\n" +
-                "NameCockpit = Cockpit\n" +
                 "NameConnector = Connector\n" +
+                "NameCockpit = Cockpit\n" +
                 "TimerDeco = 10";
             }
 
@@ -50,20 +51,25 @@ namespace IngameScript
                 }
                 string firstLigne = customData.Split('\n')[0];
 
+                //On decoupe apres chaque nouvelle ligne
                 string[] setupData = customData.Split('\n');
+                //On decoupe encore apres chaque '=' tous nos lignes
                 string[] nameConnector = setupData[1].Split('=');
                 string[] nameCockpit = setupData[2].Split('=');
                 string[] timerDeconnection = setupData[3].Split('=');
 
-                bool isValideNameConnector = nameConnector.Contains(" = ");
-                bool isValideNameCockpit = nameCockpit.Contains(" = ");
-                bool isValideTimerDeconnection = timerDeconnection.Contains(" = ");
+                //Verification si les options son valide
+                bool isValideNameConnector = setupData[1].Contains(" = ");
+                bool isValideNameCockpit = setupData[2].Contains(" = ");
+                bool isValideTimerDeconnection = setupData[3].Contains(" = ");
 
-
+                //On decoupe une derniere foi pour avoir vraiment que le nom donne en param par l'utilisateur
                 string justeNameConnector = nameConnector.Last().Trim();
                 string justeNameCockpit = nameCockpit.Last().Trim();
                 string justeStrTimer = timerDeconnection.Last().Trim();
 
+                //Verification que le param pour le timer soi un 'int'.
+                //FIXME: HardCode si se n'ai pas le cas on mets sur '5' 
                 int justeIntTimer = (int.TryParse(justeStrTimer, out justeIntTimer))? justeIntTimer : 5 ;
                 
 
@@ -71,7 +77,18 @@ namespace IngameScript
 
 
 
-                if (this.prgm.isActiveDebugInProgramBloc) this.prgm.Echo(justeIntTimer.ToString());
+                if (this.prgm.isActiveDebugInProgramBloc)
+                {
+                    this.prgm.Echo("Params cusdomData:"); 
+
+                    this.prgm.Echo("Name connector valide: " + isValideNameConnector);
+                    this.prgm.Echo("Name cockpit valide: " + isValideNameCockpit);
+                    this.prgm.Echo("Timer valide: " + isValideTimerDeconnection);
+
+                    this.prgm.Echo(justeNameConnector);
+                    this.prgm.Echo(justeNameCockpit);
+                    this.prgm.Echo(justeIntTimer.ToString());
+                }
             }
         }
     }
