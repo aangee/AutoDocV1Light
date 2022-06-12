@@ -4,9 +4,6 @@ namespace IngameScript
 {
     partial class Program : MyGridProgram
     {
-       /* AutoTriggerDock
-       *  -----------
-       *  By Aangee & Walto */
         #region Public
         public float timerDeco = 5f;//Une valeur plus haute augment le temps avent deconnection du connecteur
         #endregion
