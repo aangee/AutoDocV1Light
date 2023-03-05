@@ -1,3 +1,21 @@
 ﻿AutoTriggerDock
 -----------
 By Aangee & Walto
+
+***ATTENTION***: actuellement le ship doit être en petit bloc avec un seul et unique connecteur.
+
+Dans le jeu:
+
+1- Un ship avec **UN** connecteur.
+
+2- Un Programmable Block (PB) sur le vaisseau
+
+3- Coller le script dans le PB(le script se lance et vous informe s'il a bien trouvé son connecteur)
+
+4- Menu G dans le ship, glisser le PB dans la bar de raccoucis en utilisant option RUN
+
+5- Donner l'argument "co" pour la connection,
+
+6- Répéter l'étape 4 mais sur un autre emplacement.
+
+7- Donner l'argument "deco" pour la déconnection.
