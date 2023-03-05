@@ -30,5 +30,3 @@ Dans le jeu:
 7- Donner l'argument "deco" pour la déconnection.
 
 [github version lite](https://github.com/aangee/AutoDocV1Light)
-
-[github version full](https://github.com/aangee/SE-Dock_n_Forget) Working progress...
