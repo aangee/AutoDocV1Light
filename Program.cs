@@ -43,7 +43,7 @@ namespace IngameScript
         void Update_P(string _args) {
             if (_args == "co") Connection(); 
             else if (_args == "deco") {
-                isDecoConnector = true;// Pour le retare de deconnection du connecteur
+                isDecoConnector = true; // Pour le retare de deconnection du connecteur
                 Deconnection();
             }
             //On lance le timer pour le retard de deconnection du connecteur
