@@ -36,6 +36,8 @@ namespace IngameScript
                 BlockSorting();//On tri les bloc util
                 FindCockpit();//On cherche un cockpit
                 FindConnector();//On cherche le connector
+
+                _prgm.isAvoidRestart = true;
             }
 
             /// <summary>

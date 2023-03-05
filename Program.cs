@@ -14,6 +14,8 @@ namespace IngameScript
         bool isDecoConnector = false;
         //On stock le name de la grid du programBloc
         string uidGridShip;
+        //Pour eviter qu'il recompile au restart serveur
+        bool isAvoidRestart = false;
         //Pour active le debug 
         bool isActiveDebugInProgramBloc = true;
         bool isActiveFullDebug = false;
@@ -24,10 +26,13 @@ namespace IngameScript
         public Program() {
             // Réglage frequence update
             Runtime.UpdateFrequency = UpdateFrequency.Update10;
-            //On recup le name(uniqueID) de la grid ou se trouve le programmeBlock
-            uidGridShip = Me.CubeGrid.Name;
-            //Avec sa ont gere tous les bloc du ship
-            managerBlock = new ManagerBlocks(this);
+            if (isAvoidRestart == false)
+            {
+                //On recup le name(uniqueID) de la grid ou se trouve le programmeBlock
+                uidGridShip = Me.CubeGrid.Name;
+                //Avec sa ont gere tous les bloc du ship
+                managerBlock = new ManagerBlocks(this);
+            }
         }
 
         public void Main(string argument, UpdateType updateSource) {
