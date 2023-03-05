@@ -112,6 +112,7 @@ namespace IngameScript
             if (managerBlock.listAllTanks.Count != 0) foreach (IMyGasTank gasBlock in managerBlock.listAllTanks) gasBlock.Stockpile = true;  
         }
         #endregion
+        
         #region Batt
         /// Ici on met toutes les batteries en recharge
         public void RechargeBattery() {
