@@ -28,5 +28,3 @@ Dans le jeu:
 6- Répéter l'étape 4 mais sur un autre emplacement.
 
 7- Donner l'argument "deco" pour la déconnection.
-
-[github version lite](https://github.com/aangee/AutoDocV1Light)
